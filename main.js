@@ -13,11 +13,11 @@ app.get('/api/get-json-file', async (req, res) => {
   const storage = new Storage();
 
   // ファイルを取得します。
-  const file = await storage.bucket(bucketName).file(fileName).read();
+  const file = await storage.bucket(bucketName).file(fileName).download();
   console.log(file)
 
   // レスポンスを返します。
-  res.send(file);
+  res.send(JSON.parse(file));
 });
 
 app.listen(3000, () => {
