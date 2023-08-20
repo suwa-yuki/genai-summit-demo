@@ -13,6 +13,7 @@ app.get('/', async (req, res) => {
   // オブジェクトを取得します。
   const bucket = await storage.bucket(bucketName);
   const blob = await bucket.file(fileName);
+  console.log(blob);
 
   // オブジェクトをレスポンスに書き込みます。
   res.send(blob.data);
