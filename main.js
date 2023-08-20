@@ -1,22 +1,22 @@
+const bucketName = process.env.GCS_BUCKET;
+
 const express = require('express');
 const {Storage} = require('@google-cloud/storage');
 
 const app = express();
 
-const bucketName = process.env.GCS_BUCKET;
-const fileName = process.env.GCS_FILE;
+app.get('/api/get-json-file', async (req, res) => {
+  // ファイル名を取得します。
+  const fileName = req.query.filename;
 
-app.get('/', async (req, res) => {
-  // クライアントを作成します。
+  // Cloud Storage クライアントを作成します。
   const storage = new Storage();
 
-  // オブジェクトを取得します。
-  const bucket = await storage.bucket(bucketName);
-  const blob = await bucket.file(fileName);
-  console.log(blob);
+  // ファイルを取得します。
+  const file = await storage.bucket(bucketName).file(fileName).read();
 
-  // オブジェクトをレスポンスに書き込みます。
-  res.send(blob.data);
+  // レスポンスを返します。
+  res.send(file);
 });
 
 app.listen(3000, () => {
