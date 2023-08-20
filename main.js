@@ -14,6 +14,7 @@ app.get('/api/get-json-file', async (req, res) => {
 
   // ファイルを取得します。
   const file = await storage.bucket(bucketName).file(fileName).read();
+  console.log(file)
 
   // レスポンスを返します。
   res.send(file);
